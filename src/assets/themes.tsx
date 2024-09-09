@@ -13,4 +13,4 @@ export const colors: { [key: string]: { text: string; background: string; primar
         secondary: "#4A87A1",
         accent: "#d5152f"
     }
-}
+};

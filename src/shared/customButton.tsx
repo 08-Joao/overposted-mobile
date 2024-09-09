@@ -1,17 +1,24 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Button, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { colors } from '../assets/themes';
 
-// Definindo a interface para as propriedades do componente
 interface CustomButtonProps {
-  buttonText: string;
+  buttonText?: string;
+  customStyle?: ViewStyle;
+  onPressAction?: () => void;
+  svgComponent?: JSX.Element;
 }
 
 // Corrigindo o componente para receber props
-function CustomButton({ buttonText }: CustomButtonProps) {
+function CustomButton({ buttonText, customStyle, onPressAction, svgComponent }: CustomButtonProps): JSX.Element {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity style={customStyle} onPress={onPressAction}>
       <View>
-        <Text>{buttonText}</Text>
+        {svgComponent ? (
+          svgComponent 
+        ) : (
+          <Text>{buttonText}</Text>
+        )}
       </View>
     </TouchableOpacity>
   );

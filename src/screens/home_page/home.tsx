@@ -1,17 +1,30 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../assets/themes';
 import CustomButton from '../../shared/customButton';
+import Hotbar from '../../components/hotbar/Hotbar';
+
 
 function Home() {
     const [activeColors, setActiveColors] = useState(colors.light);
+
+    const changeTheme = () => {
+        setActiveColors((prevColors) => 
+            prevColors === colors.light ? colors.dark : colors.light
+        );
+    };
+
     return (
         <View style={styles(activeColors).Background}>
-            <CustomButton buttonText="Clique Aqui" />
+            <ScrollView>
+            <CustomButton buttonText="Clique Aqui" customStyle={styles(activeColors).switchThemeButton} onPressAction={changeTheme} />
+            <Text style={[styles(activeColors).generalText]}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosamLorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae et rerum ut quos dicta, pariatur, laborum tempora voluptatibus suscipit tenetur totam voluptas aperiam alias nisi perferendis adipisci magnam ea laboriosam..</Text>
+            </ScrollView>
+            <Hotbar activeColors={activeColors} />
         </View>
     );
 }
-const styles = (activeColors: { background: string }) =>
+const styles = (activeColors: { text: string, background: string, primary: string, secondary: string, accent: string }) =>
     StyleSheet.create({
         Background: {
             width: '100%',
@@ -19,8 +32,12 @@ const styles = (activeColors: { background: string }) =>
             backgroundColor: activeColors.background, 
         },
         switchThemeButton: {
-            width: 20, 
+            width: 50, 
+            backgroundColor: activeColors.primary,
             borderRadius: 10,
+        },
+        generalText: {
+            color: activeColors.text,
         }
     });
 
