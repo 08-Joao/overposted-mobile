@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import FeHome from '../../assets/featherIcons/FeHome';
 import FeSearch from '../../assets/featherIcons/FeSearch';
-import FePlusCircle from '../../assets/featherIcons/FePlusCircle';
+import FeCreatePost from '../../assets/featherIcons/FeCreatePost';
 import FeChat from '../../assets/featherIcons/FeChat';
 import FeUser from '../../assets/featherIcons/FeUser';
 import CustomButton from '../../shared/customButton';
@@ -16,19 +16,21 @@ interface NavbarProps {
     primary: string;
     secondary: string;
     accent: string;
+    disabledIcon: string;
   };
 }
 
 const icons = [
-  { Component: FeHome, page: 'Home', size: 30 },
-  { Component: FeSearch, page: 'Search', size: 30 },
-  { Component: FePlusCircle, size: 40 },  // Sem 'page' definido
-  { Component: FeChat, page: 'Chats', size: 30 },
-  { Component: FeUser, page: 'Profile', size: 30 },
+  { Component: FeHome, page: 'Home', size: 30, solid: true },
+  { Component: FeSearch, page: 'Search', size: 30, solid: false },
+  { Component: FeCreatePost, size: 35, solid: false},  
+  { Component: FeChat, page: 'Chats', size: 30, solid: true },
+  { Component: FeUser, page: 'Profile', size: 30, solid: true },
 ];
 
 const Hotbar = ({ activeColors }: NavbarProps) => {
   const navigation = useNavigation();
+  const route = useRoute();  // Obtenha a rota atual
 
   const handleButtonPress = (page?: string) => {
     if (page) {
@@ -41,15 +43,16 @@ const Hotbar = ({ activeColors }: NavbarProps) => {
   const styles = useMemo(() => createStyles(activeColors), [activeColors]);
 
   const renderIconButtons = () =>
-    icons.map(({ Component, size, page }, index) => (
+    icons.map(({ Component, size, page, solid }, index) => (
       <CustomButton
         key={index}
         svgComponent={
           <Component
             width={size}
             height={size}
-            stroke={styles.Icon.color}
-            style={styles.Icon}
+            stroke={page === route.name ? styles.ActiveIcon.color : styles.DisabledIcon.color}
+            style={styles.ActiveIcon}
+            fill={page === route.name && solid === true ? styles.ActiveIcon.color : 'none'}  // Comparação corrigida
           />
         }
         customStyle={styles.IconContainer}
@@ -71,6 +74,7 @@ const createStyles = (activeColors: {
   primary: string;
   secondary: string;
   accent: string;
+  disabledIcon: string;
 }) =>
   StyleSheet.create({
     Hotbar: {
@@ -90,7 +94,7 @@ const createStyles = (activeColors: {
       opacity: 0.94,
       backgroundColor: activeColors.background,
       zIndex: 0,
-      borderTopWidth: 1,
+      borderTopWidth: .5,
       borderBlockColor: activeColors.text,
     },
     IconContainer: {
@@ -101,8 +105,11 @@ const createStyles = (activeColors: {
       borderRadius: 20,
       zIndex: 15,
     },
-    Icon: {
+    ActiveIcon: {
       color: activeColors.text,
+    },
+    DisabledIcon: {
+      color: activeColors.disabledIcon,
     },
   });
 

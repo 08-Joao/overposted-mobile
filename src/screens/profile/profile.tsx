@@ -6,15 +6,17 @@ import { useTheme } from '../../assets/ThemeContext';
 
 
 function Profile({navigation}:any) {
-  const { activeColors, toggleTheme } = useTheme(); // Consumo do contexto
+  const { activeColors, toggleTheme } = useTheme(); 
 
   return (
     <View style={styles(activeColors).Background}>
-    <ScrollView>
-        <CustomButton buttonText="Clique Aqui" customStyle={styles(activeColors).switchThemeButton} onPressAction={toggleTheme} />   
-    </ScrollView>
-    <Hotbar activeColors={activeColors} />
-</View>
+        <ScrollView>
+            <Text style={[styles(activeColors).generalText]}>
+              Tela de Profile
+            </Text>
+        </ScrollView>
+      <Hotbar activeColors={activeColors} />
+    </View>
   )
 }
 
@@ -28,6 +30,9 @@ const styles = (activeColors: { text: string, background: string, primary: strin
   width: 50, 
   backgroundColor: activeColors.primary,
   borderRadius: 10,
+  },
+  generalText: {
+    color: activeColors.text,
   }
 })
 
