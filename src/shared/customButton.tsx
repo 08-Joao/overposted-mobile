@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { Button, StyleSheet, Text, TouchableOpacity, View, ViewStyle, StyleProp } from 'react-native';
 import { colors } from '../assets/themes';
 
 interface CustomButtonProps {
   buttonText?: string;
-  customStyle?: ViewStyle;
+  customStyle?: StyleProp<ViewStyle>;
   onPressAction?: () => void;
   svgComponent?: JSX.Element;
 }

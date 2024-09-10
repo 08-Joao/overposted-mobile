@@ -1,13 +1,19 @@
 import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-
-import FeHome from '../../assets/featherIcons/FeHome';
-import FeSearch from '../../assets/featherIcons/FeSearch';
-import FeCreatePost from '../../assets/featherIcons/FeCreatePost';
-import FeChat from '../../assets/featherIcons/FeChat';
-import FeUser from '../../assets/featherIcons/FeUser';
 import CustomButton from '../../shared/customButton';
+
+import SbHome from '../../assets/solarBrokenIcons/SbHome';
+import SbSearch from '../../assets/solarBrokenIcons/SbSearch';
+import SbCreatePost from '../../assets/solarBrokenIcons/SbCreatePost';
+import SbAlignLeft from '../../assets/solarBrokenIcons/SbAlignLeft';
+import SbUser from '../../assets/solarBrokenIcons/SbUser';
+
+import SbdHome from '../../assets/solarBoldIcons/SbdHome';
+import SbdSearch from '../../assets/solarBoldIcons/SbdSearch';
+// import SbdCreatePost from '../../assets/solarBoldIcons/SbdHome';
+import SbdAlignLeft from '../../assets/solarBoldIcons/SbdAlignLeft';
+import SbdUser from '../../assets/solarBoldIcons/SbdUser';
 
 interface NavbarProps {
   activeColors: {
@@ -20,12 +26,13 @@ interface NavbarProps {
   };
 }
 
-const icons = [
-  { Component: FeHome, page: 'Home', size: 30, solid: true },
-  { Component: FeSearch, page: 'Search', size: 30, solid: false },
-  { Component: FeCreatePost, size: 35, solid: false},  
-  { Component: FeChat, page: 'Chats', size: 30, solid: true },
-  { Component: FeUser, page: 'Profile', size: 30, solid: true },
+// Função que retorna os ícones com base no estado (enabled ou não)
+const icons = (enabled: boolean) => [
+  { Component: enabled ? SbdHome : SbHome, page: 'Home', size: 30 },
+  { Component: enabled ? SbdSearch : SbSearch, page: 'Search', size: 30 },
+  { Component: SbCreatePost, size: 35 },  
+  { Component: enabled ? SbdAlignLeft : SbAlignLeft, page: 'Forum', size: 30 },
+  { Component: enabled ? SbdUser : SbUser, page: 'Profile', size: 30 },
 ];
 
 const Hotbar = ({ activeColors }: NavbarProps) => {
@@ -43,22 +50,30 @@ const Hotbar = ({ activeColors }: NavbarProps) => {
   const styles = useMemo(() => createStyles(activeColors), [activeColors]);
 
   const renderIconButtons = () =>
-    icons.map(({ Component, size, page, solid }, index) => (
-      <CustomButton
-        key={index}
-        svgComponent={
-          <Component
-            width={size}
-            height={size}
-            stroke={page === route.name ? styles.ActiveIcon.color : styles.DisabledIcon.color}
-            style={styles.ActiveIcon}
-            fill={page === route.name && solid === true ? styles.ActiveIcon.color : 'none'}  // Comparação corrigida
-          />
-        }
-        customStyle={styles.IconContainer}
-        onPressAction={() => handleButtonPress(page)}
-      />
-    ));
+    icons(false).map(({ Component, size, page }, index) => {
+      const isActive = page === route.name; 
+      const ActiveComponent = icons(isActive)[index].Component; 
+
+      return (
+        <CustomButton 
+          key={index}
+          svgComponent={
+            <ActiveComponent
+              width={size}
+              height={size}
+              fill={isActive ? styles.ActiveIcon.color : 'none'}
+              stroke={isActive ? styles.ActiveIcon.color : styles.DisabledIcon.color}
+              style={isActive ? styles.ActiveIcon : styles.DisabledIcon}
+            />
+          }
+          customStyle={[
+            styles.IconContainer, 
+            Component === SbCreatePost ? styles.CreatePost : null
+          ]}
+          onPressAction={() => handleButtonPress(page)}
+        />
+      );
+    });
 
   return (
     <View style={styles.Hotbar}>
@@ -71,6 +86,7 @@ const Hotbar = ({ activeColors }: NavbarProps) => {
 const createStyles = (activeColors: {
   text: string;
   background: string;
+  backgroundAccent: string;
   primary: string;
   secondary: string;
   accent: string;
@@ -94,7 +110,7 @@ const createStyles = (activeColors: {
       opacity: 0.94,
       backgroundColor: activeColors.background,
       zIndex: 0,
-      borderTopWidth: .5,
+      borderTopWidth: 0.5,
       borderBlockColor: activeColors.text,
     },
     IconContainer: {
@@ -104,6 +120,12 @@ const createStyles = (activeColors: {
       alignItems: 'center',
       borderRadius: 20,
       zIndex: 15,
+    },
+    CreatePost: { 
+      borderRightColor: activeColors.backgroundAccent,
+      borderRightWidth: 3,
+      borderLeftColor: activeColors.backgroundAccent,
+      borderLeftWidth: 3
     },
     ActiveIcon: {
       color: activeColors.text,

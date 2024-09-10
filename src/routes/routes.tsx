@@ -5,8 +5,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ThemeProvider } from '../assets/ThemeContext';
 import Home from '../screens/home/home';
 import Search from '../screens/search/search';
-import Chats from '../screens/chats/chats';
 import Profile from '../screens/profile/profile';
+import Forum from '../screens/forum/forum';
+import Chats from '../screens/chats/chats';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,13 +28,18 @@ const Routes = () => {
             options={{ headerShown: false, animation: "none" }} 
           />
           <Stack.Screen 
-            name="Chats" 
-            component={Chats} 
+            name="Profile" 
+            component={Profile} 
             options={{ headerShown: false, animation: "none" }} 
           />
           <Stack.Screen 
-            name="Profile" 
-            component={Profile} 
+            name="Forum" 
+            component={Forum} 
+            options={{ headerShown: false, animation: "none" }} 
+          />
+          <Stack.Screen 
+            name="Chats" 
+            component={Chats} 
             options={{ headerShown: false, animation: "none" }} 
           />
         </Stack.Navigator>

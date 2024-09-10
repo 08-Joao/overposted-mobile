@@ -20,7 +20,15 @@ function Home({navigation}:any) {
     );
 }
 
-const styles = (activeColors: { text: string, background: string, primary: string, secondary: string, accent: string }) =>
+const styles = (activeColors: {
+    text: string;
+    background: string;
+    backgroundAccent: string;
+    primary: string;
+    secondary: string;
+    accent: string;
+    disabledIcon: string;
+  }) =>
     StyleSheet.create({
         Background: {
             width: '100%',
