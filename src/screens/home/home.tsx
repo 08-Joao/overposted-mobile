@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../assets/themes';
 import CustomButton from '../../shared/customButton';
 import Hotbar from '../../components/hotbar/Hotbar';
-
+import { globalStyles } from '../../assets/globalStyles';
 import { useTheme } from '../../assets/ThemeContext';
 
 
@@ -11,7 +11,7 @@ function Home({navigation}:any) {
     const { activeColors, toggleTheme } = useTheme(); // Consumo do contexto
 
     return (
-        <View style={styles(activeColors).Background}>
+        <View style={globalStyles(activeColors).Background}>
             <ScrollView>
                 <CustomButton buttonText="Clique Aqui" customStyle={styles(activeColors).switchThemeButton} onPressAction={toggleTheme} />   
             </ScrollView>
@@ -30,11 +30,6 @@ const styles = (activeColors: {
     disabledIcon: string;
   }) =>
     StyleSheet.create({
-        Background: {
-            width: '100%',
-            height: '100%',
-            backgroundColor: activeColors.background, 
-        },
         switchThemeButton: {
             width: 50, 
             backgroundColor: activeColors.primary,

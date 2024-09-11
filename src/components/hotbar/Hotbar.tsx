@@ -11,7 +11,6 @@ import SbUser from '../../assets/solarBrokenIcons/SbUser';
 
 import SbdHome from '../../assets/solarBoldIcons/SbdHome';
 import SbdSearch from '../../assets/solarBoldIcons/SbdSearch';
-// import SbdCreatePost from '../../assets/solarBoldIcons/SbdHome';
 import SbdAlignLeft from '../../assets/solarBoldIcons/SbdAlignLeft';
 import SbdUser from '../../assets/solarBoldIcons/SbdUser';
 
@@ -19,6 +18,7 @@ interface NavbarProps {
   activeColors: {
     text: string;
     background: string;
+    backgroundAccent: string;
     primary: string;
     secondary: string;
     accent: string;
@@ -39,6 +39,9 @@ const Hotbar = ({ activeColors }: NavbarProps) => {
   const navigation = useNavigation();
   const route = useRoute();  // Obtenha a rota atual
 
+  // Memoize styles to prevent unnecessary recalculations
+  const styles = useMemo(() => createStyles(activeColors), [activeColors]);
+
   const handleButtonPress = (page?: string) => {
     if (page) {
       navigation.navigate(page);
@@ -46,8 +49,6 @@ const Hotbar = ({ activeColors }: NavbarProps) => {
       console.log('Nenhuma página definida para navegar.');
     }
   };
-
-  const styles = useMemo(() => createStyles(activeColors), [activeColors]);
 
   const renderIconButtons = () =>
     icons(false).map(({ Component, size, page }, index) => {
@@ -128,7 +129,7 @@ const createStyles = (activeColors: {
       borderLeftWidth: 3
     },
     ActiveIcon: {
-      color: activeColors.text,
+      color: activeColors.accent,
     },
     DisabledIcon: {
       color: activeColors.disabledIcon,
