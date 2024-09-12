@@ -1,5 +1,8 @@
 import { StyleSheet } from 'react-native';
 
+
+
+
 export const globalStyles = (activeColors: {
   text: string;
   background: string;
@@ -14,5 +17,10 @@ export const globalStyles = (activeColors: {
       width: '100%',
       height: '100%',
       backgroundColor: activeColors.background, 
+    },
+    BackgroundAccent: {
+      width: '100%',
+      height: '100%',
+      backgroundColor: activeColors.backgroundAccent, 
     }
   });

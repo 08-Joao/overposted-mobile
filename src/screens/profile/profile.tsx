@@ -1,24 +1,32 @@
-import React, {useMemo, useState} from 'react';
-import {StyleSheet, View, Text, ScrollView, Image, Modal, Button} from 'react-native';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Image,
+  Modal,
+  Button,
+} from 'react-native';
 import CustomButton from '../../shared/customButton';
 import Hotbar from '../../components/hotbar/Hotbar';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {useTheme} from '../../assets/ThemeContext';
 import {globalStyles} from '../../assets/globalStyles';
 import {FormatNumbers} from '../../shared/formatNumbers';
 
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import SbPlusUser from '../../assets/solarBrokenIcons/SbPlusUser';
 import SbHamburguer from '../../assets/solarBrokenIcons/SbHamburguer';
+import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 
-import SbdChat from '../../assets/solarBoldIcons/SbdChat'
+import SbdChat from '../../assets/solarBoldIcons/SbdChat';
 
-
-function ModalScreen({ navigation }: any) {
+function ModalScreen({navigation}: any) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: 30 }}>This is a modal!</Text>
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text style={{fontSize: 30}}>This is a modal!</Text>
       <Button onPress={() => navigation.goBack()} title="Dismiss" />
     </View>
   );
@@ -31,13 +39,16 @@ function Profile() {
   const styles = useMemo(() => createStyles(activeColors), [activeColors]);
   const [userName, setUserName] = useState('UserName');
   const [userIdentification, setUserIdentification] = useState('@User');
+
+  const settingsBttmSheetRef = useRef(null);
+  const snapPoints = useMemo(() => ['50%', '50%'], []);
+
   const [followersNumber, setFollowersNumber] = useState(
     FormatNumbers(65165100),
   );
-
-  const [isSettingsVisible, setIsSettingsVisible] = useState(false);
-
   const [followingNumber, setFollowingNumber] = useState(FormatNumbers(213));
+
+
   const [userDescription, setuserDescription] = useState('');
 
   const teste = () => {
@@ -48,13 +59,26 @@ function Profile() {
     console.log('Follow Request');
   };
 
-  const handleConfig = () => {
+
+
+  const handleConfig = (status: boolean) => {
     console.log('Configuration');
+    
   };
 
-  const handleConversation = () => {
-    console.log('Conversation')
+  const handleOpenSettings = () => {
+    settingsBttmSheetRef.current?.expand()
   }
+
+  const handleCloseSettings = () => {
+    settingsBttmSheetRef.current?.close();
+  }
+
+
+
+  const handleConversation = () => {
+    console.log('Conversation');
+  };
 
   const RootStack = createNativeStackNavigator();
 
@@ -120,7 +144,7 @@ function Profile() {
               />
             }
             customStyle={[styles.profileCustomButton]}
-            onPressAction={() => setIsSettingsVisible(!isSettingsVisible)}
+            onPressAction={handleOpenSettings}
           />
         </View>
         <View style={styles.descriptionContainer}>
@@ -148,17 +172,21 @@ function Profile() {
         </View>
       </View>
 
-      <ScrollView style={styles.profileScrollable}>
-        {/* Conteúdo do ScrollView */}
-      </ScrollView>
+      <ScrollView style={styles.profileScrollable}></ScrollView>
+      <BottomSheet
+        ref={settingsBttmSheetRef}
+        snapPoints={snapPoints} 
+        index={0}
+        backgroundStyle={globalStyles(activeColors).BackgroundAccent} 
+        enablePanDownToClose={true}
+        animateOnMount={true}
+        >
+        <View style={styles.settingsContainer}> {/* Construa as settings dentro dessa View */}
+          
+        </View>
+      </BottomSheet>
+
       <Hotbar />
-      {/* <Modal visible={isSettingsVisible} presentationStyle='pageSheet' animationType='slide' onRequestClose={() => setIsSettingsVisible(!isSettingsVisible)}>
-
-          <View style={styles.modalContent}>
-          <Button title='close' onPress={() => setIsSettingsVisible(!isSettingsVisible)} />
-
-          </View>
-      </Modal> */}
     </View>
   );
 }
@@ -278,20 +306,20 @@ const createStyles = (activeColors: {
       flex: 1,
       paddingBottom: 10,
       alignItems: 'flex-end',
-      justifyContent: 'flex-end'
+      justifyContent: 'flex-end',
     },
-    modalContent: {
-      height: '50%', // Defina a altura desejada
-      width: '80%',  // Defina a largura desejada
-      backgroundColor: activeColors.background,
-      // alignSelf: 'center', // Centralizar o Modal
-      borderRadius: 10, // Bordas arredondadas (opcional)
-      padding: 20, // Espaçamento interno (opcional)
+    settingsModal: {
+      width: '100%',
+      height: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    settingsContainer:  {
+
     },
     generalText: {
       color: activeColors.text,
     },
-
   });
 
 export default Profile;
