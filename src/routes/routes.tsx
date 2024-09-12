@@ -43,6 +43,9 @@ const Routes = () => {
             options={{ headerShown: false, animation: "none" }} 
           />
         </Stack.Navigator>
+        {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen name="MyModal" component={ModalScreen} />
+        </Stack.Group> */}
       </NavigationContainer>
     </ThemeProvider>
   );

@@ -15,7 +15,7 @@ function Home({navigation}:any) {
             <ScrollView>
                 <CustomButton buttonText="Clique Aqui" customStyle={styles(activeColors).switchThemeButton} onPressAction={toggleTheme} />   
             </ScrollView>
-            <Hotbar activeColors={activeColors} />
+            <Hotbar />
         </View>
     );
 }

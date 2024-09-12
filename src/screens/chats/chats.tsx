@@ -15,7 +15,7 @@ function Chats({navigation}:any) {
               Tela de Chat
             </Text>
         </ScrollView>
-      <Hotbar activeColors={activeColors} />
+      <Hotbar />
     </View>
   )
 }

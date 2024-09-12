@@ -15,7 +15,7 @@ function Forum({navigation}:any) {
               Tela de Forum
             </Text>
         </ScrollView>
-      <Hotbar activeColors={activeColors} />
+      <Hotbar />
     </View>
   )
 }

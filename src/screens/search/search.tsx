@@ -16,7 +16,7 @@ function Search({navigation}:any) {
               Tela de Search
             </Text>
         </ScrollView>
-      <Hotbar activeColors={activeColors} />
+      <Hotbar />
     </View>
   )
 }

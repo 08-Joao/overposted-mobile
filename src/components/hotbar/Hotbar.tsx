@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import CustomButton from '../../shared/customButton';
+import {useTheme} from '../../assets/ThemeContext';
 
 import SbHome from '../../assets/solarBrokenIcons/SbHome';
 import SbSearch from '../../assets/solarBrokenIcons/SbSearch';
@@ -14,30 +15,22 @@ import SbdSearch from '../../assets/solarBoldIcons/SbdSearch';
 import SbdAlignLeft from '../../assets/solarBoldIcons/SbdAlignLeft';
 import SbdUser from '../../assets/solarBoldIcons/SbdUser';
 
-interface NavbarProps {
-  activeColors: {
-    text: string;
-    background: string;
-    backgroundAccent: string;
-    primary: string;
-    secondary: string;
-    accent: string;
-    disabledIcon: string;
-  };
-}
-
 // Função que retorna os ícones com base no estado (enabled ou não)
 const icons = (enabled: boolean) => [
-  { Component: enabled ? SbdHome : SbHome, page: 'Home', size: 30 },
-  { Component: enabled ? SbdSearch : SbSearch, page: 'Search', size: 30 },
-  { Component: SbCreatePost, size: 35 },  
-  { Component: enabled ? SbdAlignLeft : SbAlignLeft, page: 'Forum', size: 30 },
-  { Component: enabled ? SbdUser : SbUser, page: 'Profile', size: 30 },
+  { Component: enabled ? SbdHome : SbHome, page: 'Home', size: 30, defaultStroke: true },
+  { Component: enabled ? SbdSearch : SbSearch, page: 'Search', size: 30, defaultStroke: false },
+  { Component: SbCreatePost, size: 35, defaultStroke: false },
+  { Component: enabled ? SbdAlignLeft : SbAlignLeft, page: 'Forum', size: 30, defaultStroke: false },
+  { Component: enabled ? SbdUser : SbUser, page: 'Profile', size: 30, defaultStroke: false },
 ];
 
-const Hotbar = ({ activeColors }: NavbarProps) => {
+
+
+
+const Hotbar = () => {
+  const {activeColors, toggleTheme} = useTheme();
   const navigation = useNavigation();
-  const route = useRoute();  // Obtenha a rota atual
+  const route = useRoute();  // Get the actual route
 
   // Memoize styles to prevent unnecessary recalculations
   const styles = useMemo(() => createStyles(activeColors), [activeColors]);
@@ -50,8 +43,9 @@ const Hotbar = ({ activeColors }: NavbarProps) => {
     }
   };
 
+
   const renderIconButtons = () =>
-    icons(false).map(({ Component, size, page }, index) => {
+    icons(false).map(({ Component, size, page, defaultStroke }, index) => {
       const isActive = page === route.name; 
       const ActiveComponent = icons(isActive)[index].Component; 
 
@@ -63,7 +57,7 @@ const Hotbar = ({ activeColors }: NavbarProps) => {
               width={size}
               height={size}
               fill={isActive ? styles.ActiveIcon.color : 'none'}
-              stroke={isActive ? styles.ActiveIcon.color : styles.DisabledIcon.color}
+              stroke={isActive ? defaultStroke ? activeColors.background : styles.ActiveIcon.color : styles.DisabledIcon.color}
               style={isActive ? styles.ActiveIcon : styles.DisabledIcon}
             />
           }
