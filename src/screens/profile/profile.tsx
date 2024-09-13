@@ -176,12 +176,12 @@ function Profile() {
       <BottomSheet
         ref={settingsBttmSheetRef}
         snapPoints={snapPoints} 
-        index={0}
+        index={-1}
         backgroundStyle={globalStyles(activeColors).BackgroundAccent} 
         enablePanDownToClose={true}
         animateOnMount={true}
         >
-        <View style={styles.settingsContainer}> {/* Construa as settings dentro dessa View */}
+        <View style={styles.settingsContainer}> 
           
         </View>
       </BottomSheet>
