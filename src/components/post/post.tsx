@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState, useEffect} from 'react';
 import {
     StyleSheet,
     View,
@@ -22,11 +22,10 @@ import SbShare from '../../assets/solarBrokenIcons/SbShare';
 import SbdHeart from '../../assets/solarBoldIcons/SbdHeart';
 
 
-function post(postInformation: PostProps): JSX.Element {
+function Post(postInformation: PostProps): JSX.Element {
   const {activeColors, toggleTheme} = useTheme();
 
   const getUserInformation = () => {
-    // We Need To Get The User Name by passing postInformation.postOwnership that is a User Id
     return {
       userName: 'UserName',
       userImage: 'UserImage',
@@ -34,7 +33,19 @@ function post(postInformation: PostProps): JSX.Element {
     }
   }
 
+  // Use state to manage the like status
+  const [userLiked, setUserLiked] = useState(postInformation.userLiked);
+
+  useEffect(() => {
+    setUserLiked(postInformation.userLiked);
+  }, [postInformation.userLiked]);
+
+  const handleLike = () => { 
+    setUserLiked((prevLiked) => !prevLiked); // Toggle like state
+  }
+
   const styles = useMemo(() => createStyles(activeColors), [activeColors]);
+
   return (
     <View style={styles.Backgroud}>
       <View style={styles.userInformation}>
@@ -51,32 +62,32 @@ function post(postInformation: PostProps): JSX.Element {
             {getUserInformation().userIdentification}
           </Text>        
         </View>
-        
       </View>
       <Text style={styles.generalText}>
         {postInformation.postDescription}
       </Text>
       <View style={styles.postButtons}>
         <CustomButton 
+            onPressAction={handleLike} // Attach the like handler
             svgComponent={
-              postInformation.userLiked ?
-               <SbdHeart 
-              height={24}
-              width={24}
-              fill={activeColors.accent}
-              stroke={activeColors.accent}
-              /> 
-              : 
-              <SbHeart 
-              height={23}
-              width={23}
-              fill={activeColors.text}
-              stroke={activeColors.text}
-              />
+              userLiked ? (
+                <SbdHeart 
+                  height={24}
+                  width={24}
+                  fill={activeColors.accent}
+                  stroke={activeColors.accent}
+                />
+              ) : (
+                <SbHeart 
+                  height={23}
+                  width={23}
+                  fill={activeColors.text}
+                  stroke={activeColors.text}
+                />
+              )
             }
-            
-          />
-          <CustomButton 
+        />
+        <CustomButton 
             svgComponent={
               <SbChat 
               height={23}
@@ -86,7 +97,7 @@ function post(postInformation: PostProps): JSX.Element {
               />
             }            
           />
-          <CustomButton 
+        <CustomButton 
             svgComponent={
               <SbOverpost 
               height={23}
@@ -96,12 +107,11 @@ function post(postInformation: PostProps): JSX.Element {
               />
             }            
           />
-          <CustomButton 
+        <CustomButton 
             svgComponent={
               <SbShare 
               height={22}
               width={22}
-              // fill={activeColors.text}
               stroke={activeColors.text}
               />
             }            
@@ -111,4 +121,4 @@ function post(postInformation: PostProps): JSX.Element {
   );
 }
 
-export default post;
+export default Post;
