@@ -52,8 +52,6 @@ function Profile() {
 
 // FUNCTIONS
 
-
-
   const teste = () => {
     console.log('teste');
   };

@@ -5,7 +5,7 @@ import CustomButton from '../../shared/customButton';
 import Hotbar from '../../components/hotbar/Hotbar';
 import { globalStyles } from '../../assets/globalStyles';
 import { useTheme } from '../../assets/ThemeContext';
-
+import Post from '../../components/post/post';
 
 function Home({navigation}:any) {
     const { activeColors, toggleTheme } = useTheme(); // Consumo do contexto
@@ -13,7 +13,12 @@ function Home({navigation}:any) {
     return (
         <View style={globalStyles(activeColors).Background}>
             <ScrollView>
-                
+                <Post />
+                <Post />
+                <Post />
+                <Post />
+                <Post />
+                <Post />
             </ScrollView>
             <Hotbar />
         </View>
