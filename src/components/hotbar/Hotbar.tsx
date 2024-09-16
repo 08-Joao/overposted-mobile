@@ -3,6 +3,8 @@ import { StyleSheet, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import CustomButton from '../../shared/customButton';
 import {useTheme} from '../../assets/ThemeContext';
+import {createStyles} from './assets/style'; // Importação do estilo
+
 
 import SbHome from '../../assets/solarBrokenIcons/SbHome';
 import SbSearch from '../../assets/solarBrokenIcons/SbSearch';
@@ -32,8 +34,9 @@ const Hotbar = () => {
   const navigation = useNavigation();
   const route = useRoute();  // Get the actual route
 
-  // Memoize styles to prevent unnecessary recalculations
   const styles = useMemo(() => createStyles(activeColors), [activeColors]);
+
+  // Memoize styles to prevent unnecessary recalculations
 
   const handleButtonPress = (page?: string) => {
     if (page) {
@@ -78,56 +81,6 @@ const Hotbar = () => {
   );
 };
 
-const createStyles = (activeColors: {
-  text: string;
-  background: string;
-  backgroundAccent: string;
-  primary: string;
-  secondary: string;
-  accent: string;
-  disabledIcon: string;
-}) =>
-  StyleSheet.create({
-    Hotbar: {
-      position: 'absolute',
-      width: '100%',
-      height: 65,
-      gap: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-      bottom: 0,
-      flexDirection: 'row',
-    },
-    backgroundView: {
-      width: '100%',
-      height: '100%',
-      position: 'absolute',
-      opacity: 0.94,
-      backgroundColor: activeColors.background,
-      zIndex: 0,
-      borderTopWidth: 0.5,
-      borderBlockColor: activeColors.text,
-    },
-    IconContainer: {
-      flex: 1,
-      height: '90%',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 20,
-      zIndex: 15,
-    },
-    CreatePost: { 
-      borderRightColor: activeColors.backgroundAccent,
-      borderRightWidth: 3,
-      borderLeftColor: activeColors.backgroundAccent,
-      borderLeftWidth: 3
-    },
-    ActiveIcon: {
-      color: activeColors.accent,
-    },
-    DisabledIcon: {
-      color: activeColors.disabledIcon,
-    },
-  });
+
 
 export default Hotbar;

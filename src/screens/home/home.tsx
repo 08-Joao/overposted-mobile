@@ -13,7 +13,7 @@ function Home({navigation}:any) {
     return (
         <View style={globalStyles(activeColors).Background}>
             <ScrollView>
-                <CustomButton buttonText="Clique Aqui" customStyle={styles(activeColors).switchThemeButton} onPressAction={toggleTheme} />   
+                
             </ScrollView>
             <Hotbar />
         </View>

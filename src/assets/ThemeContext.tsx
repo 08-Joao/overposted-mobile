@@ -1,9 +1,8 @@
-// ThemeContext.tsx
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { colors } from '../assets/themes';
 
 interface ThemeContextType {
-  activeColors: typeof colors.light;  
+  activeColors: typeof colors.light;
   toggleTheme: () => void;
 }
 
