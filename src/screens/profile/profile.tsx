@@ -208,7 +208,6 @@ function Profile() {
           />
         </View>
       </BottomSheet>
-
       <Hotbar />
     </View>
   );

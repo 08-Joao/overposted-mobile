@@ -50,4 +50,13 @@ export const createStyles = (activeColors: {
       DisabledIcon: {
         color: activeColors.disabledIcon,
       },
+      modalContainer: { 
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        // backgroundColor: 'red'
+      },
+      postModal: {
+        backgroundColor: activeColors.backgroundAccent,
+      }
     });
