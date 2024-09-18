@@ -1,10 +1,14 @@
-import React, {useMemo} from 'react';
+import React, {act, useMemo, useState} from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {View, TextInput, Text} from 'react-native';
 import {globalStyles} from '../../assets/globalStyles';
 import {useTheme} from '../../assets/ThemeContext';
 import {createStyles} from './assets/style';
 import CustomButton from '../../shared/customButton';
+
+import SbCamera from '../../assets/solarBrokenIcons/SbCamera';
+import SbGallery from '../../assets/solarBrokenIcons/SbGallery';
+
 
 interface postProps {
   ref: React.MutableRefObject<BottomSheet | null>;
@@ -17,7 +21,9 @@ const CreatePostModal = React.forwardRef<BottomSheet, postProps>(
   ({title, snapPoints, handleClosePost}, ref) => {
     const {activeColors} = useTheme();
     const styles = useMemo(() => createStyles(activeColors), [activeColors]);
+    const [postDescription, onPostDescriptionChange] = useState('');
 
+    
     return (
       <BottomSheet
         ref={ref}
@@ -26,8 +32,10 @@ const CreatePostModal = React.forwardRef<BottomSheet, postProps>(
         backgroundStyle={globalStyles(activeColors).BackgroundAccent}
         enablePanDownToClose={true}
         animateOnMount={true}
-        onClose={handleClosePost}>
-        <View>
+        onClose={handleClosePost}
+        handleIndicatorStyle={styles.handleStyle}
+        >
+        <View style={styles.Container}>
           <View style={styles.titleArea}>            
             <Text style={styles.titleText}>{title}</Text>
             <CustomButton
@@ -35,7 +43,37 @@ const CreatePostModal = React.forwardRef<BottomSheet, postProps>(
               onPressAction={handleClosePost}
             />
           </View>
-          <TextInput />
+          <TextInput 
+            placeholder="What I am thinking now..." 
+            style={styles.textInput} 
+            value={postDescription} 
+            onChangeText={onPostDescriptionChange} 
+            placeholderTextColor={activeColors.disabledIcon}
+            multiline={true} 
+            maxLength={352}
+          />
+          <View style={styles.IconsContainer}>
+            <CustomButton 
+              svgComponent={
+                <SbCamera
+                  width={24}
+                  height={24}
+                  stroke={activeColors.text}
+                />
+              }
+              
+            />
+            <CustomButton 
+              svgComponent={
+                <SbGallery
+                  width={22}
+                  height={22}
+                  stroke={activeColors.text}
+                />
+              }
+              
+            />
+          </View>
         </View>
       </BottomSheet>
     );

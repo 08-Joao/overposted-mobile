@@ -63,7 +63,7 @@ function Post(postInformation: PostProps): JSX.Element {
           </Text>        
         </View>
       </View>
-      <Text style={styles.generalText}>
+      <Text style={styles.postText}>
         {postInformation.postDescription}
       </Text>
       <View style={styles.postButtons}>

@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef } from 'react';
-import { RefreshControl, ScrollView, View } from 'react-native';
+import { RefreshControl, ScrollView, View, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { globalStyles } from '../../assets/globalStyles';
 import { useTheme } from '../../assets/ThemeContext';
 import Post from '../../components/post/post';
@@ -92,6 +92,9 @@ function Home({ navigation }: any) {
         if (postBttmSheetRef.current) {
             postBttmSheetRef.current.close();
             setOpenPost(false);
+            setTimeout(() => {
+                Keyboard.dismiss();
+              }, 300);
         }
     };
 
@@ -101,6 +104,7 @@ function Home({ navigation }: any) {
     };
 
     return (
+        
         <View style={globalStyles(activeColors).Background}>
             <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}>
                 {posts.map((post) => (
@@ -117,7 +121,10 @@ function Home({ navigation }: any) {
                     />
                 ))}
             </ScrollView>
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+
             <CreatePostModal title='Create Post' ref={postBttmSheetRef} snapPoints={snapPoints} handleClosePost={handleClosePost} />
+            </TouchableWithoutFeedback>
             <Hotbar handleOpenPost={openPost ? handleClosePost : handleOpenPost} />
         </View>
     );

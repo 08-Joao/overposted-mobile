@@ -9,17 +9,36 @@ export const createStyles = (activeColors: {
   accent: string;
   disabledIcon: string;
 }) => StyleSheet.create({
+    Container: { 
+        height: '100%',
+        padding: 16,
+        gap: 16,
+    },
     titleArea: { 
         flexDirection: 'row',
         width: '100%',
-        padding: 16,
         justifyContent: 'space-between',
         alignItems: 'center',
+    },
+    handleStyle: {
+        backgroundColor: activeColors.text,
     },
     titleText: {
         color: activeColors.text,
         fontSize: 16,
         fontWeight: 'bold',
     },
-
+    textInput: { 
+        color: activeColors.text,
+        fontSize: 13,
+        fontWeight: '500',
+        // backgroundColor: activeColors.background,
+        textAlignVertical: 'top', // Alinhar o texto no topo do TextInput
+    },
+    IconsContainer: { 
+        flexDirection: 'row',
+        gap: 16,
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+    }
 });

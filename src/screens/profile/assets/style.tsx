@@ -138,4 +138,7 @@ export const createStyles = (activeColors: {
     generalText: {
       color: activeColors.text,
     },
+    handleStyle: {
+      backgroundColor: activeColors.text,
+  }
   });

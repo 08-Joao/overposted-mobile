@@ -171,7 +171,9 @@ function Profile() {
         index={-1}
         backgroundStyle={globalStyles(activeColors).BackgroundAccent}
         enablePanDownToClose={true}
-        animateOnMount={true}>
+        animateOnMount={true}
+        handleIndicatorStyle={styles.handleStyle}
+        >
         <View style={styles.settingsContainer}>
           <CustomButton
             svgComponent={

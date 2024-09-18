@@ -12,7 +12,8 @@ export const createStyles = (activeColors: {
     Backgroud: {
         backgroundColor: activeColors.background,
         minHeight: 150,
-        padding: 10,
+        padding: 16,
+        paddingTop: 24  ,
         borderBottomColor: activeColors.backgroundAccent,
         borderBottomWidth: 1,
         justifyContent: 'space-between', 
@@ -34,6 +35,11 @@ export const createStyles = (activeColors: {
       flexDirection: 'row',
       alignItems: 'flex-end',
       justifyContent: 'space-evenly',
+    },
+    postText: {
+      color: activeColors.text,
+      paddingBottom: 8,
+      paddingTop: 8,
     },
     generalText: {
       color: activeColors.text,
