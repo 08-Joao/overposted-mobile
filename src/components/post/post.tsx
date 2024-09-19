@@ -14,6 +14,7 @@ import {globalStyles} from '../../assets/globalStyles';
 import {useTheme} from '../../assets/ThemeContext';
 import { PostProps  } from '../../shared/postProps';
 
+
 import SbHeart from '../../assets/solarBrokenIcons/SbHeart';
 import SbChat from '../../assets/solarBrokenIcons/SbChat';
 import SbOverpost from '../../assets/solarBrokenIcons/SbOverpost';
@@ -72,8 +73,8 @@ function Post(postInformation: PostProps): JSX.Element {
             svgComponent={
               userLiked ? (
                 <SbdHeart 
-                  height={24}
-                  width={24}
+                  height={23}
+                  width={23}
                   fill={activeColors.accent}
                   stroke={activeColors.accent}
                 />
@@ -110,8 +111,8 @@ function Post(postInformation: PostProps): JSX.Element {
         <CustomButton 
             svgComponent={
               <SbShare 
-              height={22}
-              width={22}
+              height={23}
+              width={23}
               stroke={activeColors.text}
               />
             }            

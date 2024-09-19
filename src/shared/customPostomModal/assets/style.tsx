@@ -17,7 +17,7 @@ export const createStyles = (activeColors: {
     titleArea: { 
         flexDirection: 'row',
         width: '100%',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         alignItems: 'center',
     },
     handleStyle: {
@@ -32,13 +32,12 @@ export const createStyles = (activeColors: {
         color: activeColors.text,
         fontSize: 13,
         fontWeight: '500',
-        // backgroundColor: activeColors.background,
-        textAlignVertical: 'top', // Alinhar o texto no topo do TextInput
+        textAlignVertical: 'top',
     },
     IconsContainer: { 
         flexDirection: 'row',
         gap: 16,
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         alignItems: 'center'
     }
 });

@@ -1,14 +1,12 @@
-import React, {act, useMemo, useState} from 'react';
+import React, { useMemo, useState } from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
-import {View, TextInput, Text} from 'react-native';
-import {globalStyles} from '../../assets/globalStyles';
-import {useTheme} from '../../assets/ThemeContext';
-import {createStyles} from './assets/style';
+import { View, TextInput, Text } from 'react-native';
+import { globalStyles } from '../../assets/globalStyles';
+import { useTheme } from '../../assets/ThemeContext';
+import { createStyles } from './assets/style';
 import CustomButton from '../../shared/customButton';
-
 import SbCamera from '../../assets/solarBrokenIcons/SbCamera';
 import SbGallery from '../../assets/solarBrokenIcons/SbGallery';
-
 
 interface postProps {
   ref: React.MutableRefObject<BottomSheet | null>;
@@ -18,12 +16,11 @@ interface postProps {
 }
 
 const CreatePostModal = React.forwardRef<BottomSheet, postProps>(
-  ({title, snapPoints, handleClosePost}, ref) => {
-    const {activeColors} = useTheme();
+  ({ title, snapPoints, handleClosePost }, ref) => {
+    const { activeColors } = useTheme();
     const styles = useMemo(() => createStyles(activeColors), [activeColors]);
     const [postDescription, onPostDescriptionChange] = useState('');
 
-    
     return (
       <BottomSheet
         ref={ref}
@@ -34,50 +31,41 @@ const CreatePostModal = React.forwardRef<BottomSheet, postProps>(
         animateOnMount={true}
         onClose={handleClosePost}
         handleIndicatorStyle={styles.handleStyle}
-        >
+        keyboardBehavior="interactive"  // Isso faz com que o teclado não empurre a hotbar
+        keyboardBlurBehavior="restore"  // Isso garante que o modal restaure seu estado quando o teclado fechar
+      >
         <View style={styles.Container}>
-          <View style={styles.titleArea}>            
-            <Text style={styles.titleText}>{title}</Text>
+          <View style={styles.titleArea}>
             <CustomButton
-              buttonText={<Text style={styles.titleText}>Close</Text>}
+              buttonText={<Text style={styles.titleText}>Overpost</Text>}
               onPressAction={handleClosePost}
             />
           </View>
-          <TextInput 
-            placeholder="What I am thinking now..." 
-            style={styles.textInput} 
-            value={postDescription} 
-            onChangeText={onPostDescriptionChange} 
+          <TextInput
+            placeholder="What I am thinking now..."
+            style={styles.textInput}
+            value={postDescription}
+            onChangeText={onPostDescriptionChange}
             placeholderTextColor={activeColors.disabledIcon}
-            multiline={true} 
+            multiline={true}
             maxLength={352}
           />
           <View style={styles.IconsContainer}>
-            <CustomButton 
+            <CustomButton
               svgComponent={
-                <SbCamera
-                  width={24}
-                  height={24}
-                  stroke={activeColors.text}
-                />
+                <SbCamera width={24} height={24} stroke={activeColors.text} />
               }
-              
             />
-            <CustomButton 
+            <CustomButton
               svgComponent={
-                <SbGallery
-                  width={22}
-                  height={22}
-                  stroke={activeColors.text}
-                />
+                <SbGallery width={22} height={22} stroke={activeColors.text} />
               }
-              
             />
           </View>
         </View>
       </BottomSheet>
     );
-  },
+  }
 );
 
 CreatePostModal.displayName = 'CreatePostModal'; // Important for forwardRef

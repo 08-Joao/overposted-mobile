@@ -1,9 +1,9 @@
-import React, {useMemo, useRef, useState} from 'react';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import React, { useMemo, useState, useEffect } from 'react';
+import { Keyboard, View, Text } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import CustomButton from '../../shared/customButton';
-import {useTheme} from '../../assets/ThemeContext';
-import {createStyles} from './assets/style'; // Importação do estilo
+import { useTheme } from '../../assets/ThemeContext';
+import { createStyles } from './assets/style'; // Importação do estilo
 
 import SbHome from '../../assets/solarBrokenIcons/SbHome';
 import SbSearch from '../../assets/solarBrokenIcons/SbSearch';
@@ -30,7 +30,7 @@ const icons = (enabled: boolean) => [
     size: 30,
     defaultStroke: false,
   },
-  {Component: SbCreatePost, size: 35, page: 'CreatePost', defaultStroke: false},
+  { Component: SbCreatePost, size: 35, page: 'CreatePost', defaultStroke: false },
   {
     Component: enabled ? SbdAlignLeft : SbAlignLeft,
     page: 'Forum',
@@ -45,16 +45,41 @@ const icons = (enabled: boolean) => [
   },
 ];
 
-const Hotbar = ({handleOpenPost}: {handleOpenPost?: () => void}) => {
-  const {activeColors} = useTheme();
+const Hotbar = ({ handleOpenPost }: { handleOpenPost?: () => void }) => {
+  const { activeColors } = useTheme();
   const navigation = useNavigation();
   const route = useRoute();
   const styles = useMemo(() => createStyles(activeColors), [activeColors]);
 
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  // Adicionar listeners para detectar quando o teclado é mostrado ou escondido
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
   const handleButtonPress = (page?: string) => {
     if (page) {
       if (page === 'CreatePost') {
-        route.name === 'Home' && handleOpenPost ? handleOpenPost() :  navigation.navigate('Home');
+        route.name === 'Home' && handleOpenPost
+          ? handleOpenPost()
+          : navigation.navigate('Home');
       } else {
         navigation.navigate(page);
       }
@@ -64,7 +89,7 @@ const Hotbar = ({handleOpenPost}: {handleOpenPost?: () => void}) => {
   };
 
   const renderIconButtons = () =>
-    icons(false).map(({Component, size, page, defaultStroke}, index) => {
+    icons(false).map(({ Component, size, page, defaultStroke }, index) => {
       const isActive = page === route.name;
       const ActiveComponent = icons(isActive)[index].Component;
 
@@ -96,7 +121,7 @@ const Hotbar = ({handleOpenPost}: {handleOpenPost?: () => void}) => {
     });
 
   return (
-    <View style={styles.Hotbar}>
+    <View style={[styles.Hotbar, keyboardVisible && { bottom: -65 }]}>
       <View style={styles.backgroundView}></View>
       {renderIconButtons()}
     </View>
